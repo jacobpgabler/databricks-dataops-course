@@ -43,6 +43,7 @@ print(f"catalog: {catalog}")
 revenue_by_borough_tbl = tablename(cat=catalog, db="revenue", tbl="revenue_by_borough")
 print("revenue_by_borough_tbl:" + repr(revenue_by_borough_tbl))
 revenue_by_borough_df = spark.sql(f"select * from {revenue_by_borough_tbl}")
+
 revenue_by_borough_df.display()
 
 # COMMAND ----------
@@ -73,7 +74,7 @@ revenue_per_inhabitant_df = (
     revenue_by_borough_df
     .where(F.col("pickup_borough").isNotNull() & (F.col("pickup_borough") != "Unknown"))
     .join(borough_population_df, revenue_by_borough_df.pickup_borough == borough_population_df.borough, "inner")
-    .withColumn("amount", F.round("amount", 2))
+    .withColumn("full_amount", F.round("amount", 2))
     .withColumn("revenue_per_inhabitant", F.round(
         revenue_by_borough_df.amount / borough_population_df.population, 2)
     )
