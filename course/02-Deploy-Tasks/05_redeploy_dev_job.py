@@ -55,5 +55,4 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC
-# MAGIC Answer here...
+# MAGIC answer here..
